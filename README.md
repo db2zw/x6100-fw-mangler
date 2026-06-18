@@ -30,7 +30,7 @@
  * type `make`
 
 # Requirements
- * Docker
+ * Install [docker](https://www.docker.com/)
  * `qemu-user-static` with a proper `binfmt` config, although if not available un your platform there is a small helper in the tools section.
 
 ## OSX
@@ -50,19 +50,35 @@
 
  General usage
 
- * `make` - generates all Docker images
  * `make url` - Downloads all SDCard and update images
+ * `make` - generates all Docker images
  * `make clean` - cleans up the directory
 
 ### Images
-
- * `xiegu-v1.1.7-vanilla` - Xiegu orignal
- * `r1cbu-v0.17.1-vanilla` - alternative of R1CBU
- * `xiegu-v1.1.7-modded` - Xiegu orignal patched, add more userland tools to rootfs
- * `r1cbu-v0.17.1-modded` - alternative of R1CBU, rootfs extended
- * `multiboot-vanilla` - boots per default v1.1.7-vanilla, If you keep the left-most-button pressed until you see a changed boot logo of the R1CBU firmware to boot it.
- * `multiboot-modded` - boots per default v1.1.7-modded, If you keep the left-most-button pressed until you see a changed boot logo of the R1CBU firmware to boot it.
-
+ > [!NOTE]
+ The color_mod is based on https://github.com/wicknix/x6100_gui/releases/tag/v0.31.2-CM4 from wicknix  
+ Since wicknix sold his x6100 and stopped developing the color_mod, I took over the project and added a few more features
+   
+ * `xiegu-vanilla` - Xiegu orignal
+ * `r1cbu-vanilla` - alternative of R1CBU/R2RFE
+ * `dl2zw-color_mod-vanilla` - alternative of R1CBU/R2RFE with color_mod from DL2ZW
+ * `xiegu-modded` - Xiegu orignal patched, add more userland tools to rootfs
+ * `r1cbu-modded` - alternative of R1CBU/R2RFE, rootfs extended
+ * `dl2zw-color_mod-modded` - alternative of R1CBU/R2RFE with color_mod from DL2ZW, rootfs extended
+ * `multiboot-vanilla` - boots per default vanilla, If you keep the left-most-button pressed until you see a changed boot logo of the R1CBU/R2RFE firmware to boot it.
+ * `multiboot-modded` - boots per default modded, If you keep the left-most-button pressed until you see a changed boot logo of the R1CBU/R2RFE firmware to boot it.
+ 
+ You can boot the different Images from sdcard by pressing and holding one of the 5 buttons below the display.The button on the far right is Button 1, the button on the far left is Button 5.
+ * `Button 1` - alternative of R1CBU/R2RFE
+ * `Button 2` - alternative of R1CBU/R2RFE with color_mod from DL2ZW
+ * `Button 3` - Xiegu orignal (free for other Images)
+ * `Button 4` - Xiegu orignal (free for other Images)
+ * `Button 5` - Xiegu orignal (free for other Images)
+ * `No Button` - Xiegu orignal
+ 
+#### Login via ssh
+ * User: root
+ * Password: x6100
 
 #### tl:dr Workflow
 
@@ -71,13 +87,13 @@
  * Dockerimage `Name` --> `name.update.img`
 
  eg.
- * `make xiegu-v1.1.7-modded.sdcard.img` - generates a modded image of the original Xiegu Firmware
- * `make r1cbu-v0.17.1-modded.sdcard.img` - the same for the R1CBU OpenSource firmware
+ * `make xiegu-modded.sdcard.img` - generates a modded image of the original Xiegu Firmware
+ * `make r1cbu-modded.sdcard.img` - the same for the R1CBU/R2RFE OpenSource firmware
 
- * `make v1.1.7-modded.update.img` - generates a update image for installing it into the devies's eMMC
- * `make r1cbu-v0.17.1-modded.update.img` - the same for the R1CBU OpenSource firmware
+ * `make modded.update.img` - generates a update image for installing it into the devies's eMMC
+ * `make r1cbu-modded.update.img` - the same for the R1CBU/R2RFE OpenSource firmware
 
- * `make multiboot-modded.sdcard.img` - this is an image with latest Xiegu and R1CBU Firmware in one.
+ * `make multiboot-modded.sdcard.img` - this is an image with latest Xiegu and R1CBU/R2RFE Firmware in one.
  * `make multiboot-modded.update.img` - the same but for writing on the eMMC
 
 #### Patches
@@ -85,7 +101,6 @@
  The modded Xiegu image includes this patches:
  * added a bluetoothd startup script from https://github.com/strijar/x6100_bt_patch, to allow easier pairing from the command line
  * patch https://github.com/busysteve/X6100-Bluetooth-Audio
- * the GUI APP for v1.1.7.1 is colour patched - cyan text colour instead of red (thx to DB2ZW)
  * disable automounting of random USB or MMC hotplug devices for now
  * enable bash as standard shell
  * add serial console helpers to copy with different sized terminal emulator, no more 80x24 if your terminal app behaves
@@ -154,7 +169,7 @@ nmcli conn up WLANNAME
  * U-Boot is searching for a MBR style partition table, especially it searches for _bootable_ partition where it tries to execute a `uboot.scr` to be executed
  * `uboot.scr` contains the code to load kernel, a DTB and maybe an initrd file and boots it
 
- The uboot used in Xiegus image oder R1CBU is able to detect where it has been booted from. The UBoot environment contains a variable `devnum` set to
+ The uboot used in Xiegus image oder R1CBU/R2RFE is able to detect where it has been booted from. The UBoot environment contains a variable `devnum` set to
  * 0 if booted from the SD card slot
  * 1 if booted from the internal eMMC
 
@@ -174,7 +189,7 @@ The file `/etc/xgradio/xgradio.conf` needs to be edited. In case of the version 
 fullband-tx=disable
 ```
 If you edit this with you favorite editor, you can chose for the `fullband-tx` setting
- * `disable` - factory default - only TX on HM bands
+ * `disable` - factory default - only TX on HAM bands
  * `enable` - enable TX on all frequencies the TRX supports.
 
 Restart the TRX (or just the radio app) afterwards.
@@ -190,10 +205,4 @@ The `exec-counter` is incremented on every start of the radio app.
 exec-counter=23
 ```
 
-# Ideas & Plans
-
- * provide further settings and channels for the Xiegu original app
- * provide further settings and channels for the R1CBU app
- * rescue settings from Xiegu and R1CBU on image flash and restore
- * use stripped down version of ansible-openwrt (https://github.com/gekmihesg/ansible-openwrt) to configure or modify an running system on a X6100 or to backup settings.
 
