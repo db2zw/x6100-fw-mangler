@@ -66,12 +66,12 @@ build: $(WORK_FILES)
 	$(Q) ./bin/D6100 -p --image $(NAME_PFX)$(NAME):$(@:.update.img=) sh $(SHOPT) img-mangler/docker-img-to-sdcard.sh --update --min-free $(IMG_MIN_FREE) $@
 
 #--- extract uboot from image
-%.uboot.img: %.img
-	$(E) "UBOOT $@"
-	$(Q) dd if=$< of=$@ bs=1024 skip=8 count=640 status=none
+#%.uboot.img: %.img
+#	$(E) "UBOOT $@"
+#	$(Q) dd if=$< of=$@ bs=1024 skip=8 count=640 status=none
 
 #--- generate a known good uboot
-uboot.img: Xiegu-1.1.8.update.uboot.img
+uboot.img: uboot.bin
 	$(E) "UBOOT $@"
 	$(Q) cat $< > $@
 
