@@ -5,12 +5,15 @@
 #DOCKER_IMAGES :=
 #DOCKER_IMAGES += xiegu-modded
 #DOCKER_IMAGES += r1cbu-modded
+#DOCKER_IMAGES += dl2zw-color_mod-modded
 
 #WORK_FILES :=
 #WORK_FILES += xiegu-modded.sdcard.img
 #WORK_FILES += xiegu-modded.update.img
 #WORK_FILES += r1cbu-vanilla.sdcard.img
 #WORK_FILES += r1cbu-modded.sdcard.img
+#WORK_FILES += dl2zw-color_mod-vanilla.sdcard.img
+#WORK_FILES += dl2zw-color_mod-modded.sdcard.img
 #WORK_FILES += multiboot.sdcard.img
 #WORK_FILES += multiboot-vanilla.sdcard.img
 #WORK_FILES += multiboot-vanilla.update.img
