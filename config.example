@@ -3,14 +3,14 @@
 # config for ../docker-images/Makefile.Dockerfile.generic
 
 #DOCKER_IMAGES :=
-#DOCKER_IMAGES += xiegu-v1.1.8-modded
-#DOCKER_IMAGES += r1cbu-v0.28.0-modded
+#DOCKER_IMAGES += xiegu-modded
+#DOCKER_IMAGES += r1cbu-modded
 
 #WORK_FILES :=
-#WORK_FILES += xiegu-v1.1.8-modded.sdcard.img
-#WORK_FILES += xiegu-v1.1.8-modded.update.img
-#WORK_FILES += r1cbu-v0.28.0-vanilla.sdcard.img
-#WORK_FILES += r1cbu-v0.28.0-modded.sdcard.img
+#WORK_FILES += xiegu-modded.sdcard.img
+#WORK_FILES += xiegu-modded.update.img
+#WORK_FILES += r1cbu-vanilla.sdcard.img
+#WORK_FILES += r1cbu-modded.sdcard.img
 #WORK_FILES += multiboot.sdcard.img
 #WORK_FILES += multiboot-vanilla.sdcard.img
 #WORK_FILES += multiboot-vanilla.update.img
@@ -31,7 +31,7 @@ IMG_MIN_FREE=6144
 
 # Workaround for sources from the web behind a captcha
 #FILENAME.zip:  /OUTSIDE/OF/TREE/../RELATIVE/OR/ABSOLUTE/FILE.zip
-#X6100-1.1.7.1.update.zip:  ../x6100-dumps/x6100udimg-v1.1.7-230831001.zip
+#X6100-update.zip:  ../x6100-dumps/x6100udimg-230831001.zip
 #	cat $< > $@
 #
 # vim: noet ts=2 sw=2 ft=Makefile

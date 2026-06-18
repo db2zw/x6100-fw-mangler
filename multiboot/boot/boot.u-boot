@@ -3,19 +3,42 @@
 
 setenv rootdev PARTUUID=
 
-#--- scan the left-most three buttons
+#--- scan if pressed one of the under buttons
+bm=0
 # * set matrix row
 gpio clear PG6
-  setenv x6100_multiboot Default
-  if gpio input PE16 ; then
-    setenv x6100_multiboot Button1
-  elif gpio input PE17 ; then
-    setenv x6100_multiboot Button2
-  elif gpio input PE11 ; then
-    setenv x6100_multiboot Button3
-  fi
+if gpio input PE16 ; then
+	bm=1
+elif gpio input PE17 ; then
+	bm=2
+elif gpio input PE11 ; then
+	bm=3
+fi
 # * reset matrix
 gpio input PG6
+
+if test "${bm}" < "1"; then
+#set matrix row gpio200
+gpio clear PG8
+    if gpio input PE16 ; then
+	bm=4
+    elif gpio input PE17 ; then
+	bm=5
+#reset matrix gpio200
+gpio input PG8
+    fi
+fi
+
+if test "${bm}" > "0"; then
+echo "---PRESSED BUTTON ${bm}---"
+	setenv x6100_multiboot "Button${bm}"
+else
+echo "---NO BUTTON PRESSED---"
+	setenv x6100_multiboot Default
+fi
+
+# enable key LEDs to show that the key can be released
+gpio set 143
 
 echo setenv bootargs console=ttyS0,115200 root=${rootdev} rootwait panic=10 fbcon=rotate:3 video=VGA:480x800 x6100_multiboot=${x6100_multiboot}
 setenv bootargs console=ttyS0,115200 root=${rootdev} rootwait panic=10 fbcon=rotate:3 video=VGA:480x800 x6100_multiboot=${x6100_multiboot}

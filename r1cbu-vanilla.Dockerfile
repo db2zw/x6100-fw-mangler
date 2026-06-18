@@ -1,10 +1,10 @@
 # (C) 2023 Joerg Jungermann, GPLv2 see LICENSE
 
 # set base, copy scripts & out-of-tree resources
-FROM x6100:R1CBU-v0.28.0.sdcard
-COPY r1cbu-v0.28.0-vanilla.Dockerfile.d/ /src/r1cbu-v0.28.0-vanilla.Dockerfile.d/
+FROM x6100:R1CBU-sdcard
+COPY r1cbu-vanilla.Dockerfile.d/ /src/r1cbu-vanilla.Dockerfile.d/
 
-#COPY R1CBU-v0.28.0.patch.tar.gz /tmp
+#COPY R1CBU-patch.tar.gz /tmp
 
 # set environment - all build containers inherit this
 #ENV - none -
@@ -15,6 +15,6 @@ CMD rm -f /target/etc/resolv.conf; cp /etc/resolv.conf /target/etc/resolv.conf; 
 # * adding stuff, etc
 RUN set -e ;\
   export \
-    SRC=/src/r1cbu-v0.28.0-vanilla.Dockerfile.d/ ;\
+    SRC=/src/r1cbu-vanilla.Dockerfile.d/ ;\
   exec \
     /bin/sh /src/img-mangler/docker-build-helper.sh $SRC

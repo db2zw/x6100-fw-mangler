@@ -67,6 +67,8 @@ FROM x6100:img-mangler
   #  ln -s R1CBU Button1 ;\
   #  ln -s armbian Button2 ;\
   #  ln -s YetAnother Button3 ;\
+  #  ln -s YetAnother Button4 ;\
+  #  ln -s YetAnother Button5 ;\
   #: # eo RUN
 
 # vim: foldmethod=indent

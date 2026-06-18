@@ -1,1 +1,0 @@
-../xiegu-v1.1.8-modded.Dockerfile.d/200_init_rework.sh

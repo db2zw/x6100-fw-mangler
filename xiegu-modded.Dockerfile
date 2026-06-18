@@ -1,8 +1,8 @@
 # (C) 2023 Joerg Jungermann, GPLv2 see LICENSE
 
 # set base, copy scripts & out-of-tree resources
-FROM x6100:xiegu-v1.1.8-opt-alpine
-COPY xiegu-v1.1.8-modded.Dockerfile.d/ /src/xiegu-v1.1.8-modded.Dockerfile.d
+FROM x6100:xiegu-opt-alpine
+COPY xiegu-modded.Dockerfile.d/ /src/xiegu-modded.Dockerfile.d
 
 # set environment - all build containers inherit this
 #ENV - none -
@@ -12,6 +12,6 @@ COPY xiegu-v1.1.8-modded.Dockerfile.d/ /src/xiegu-v1.1.8-modded.Dockerfile.d
 # * adding stuff, etc
 RUN set -e ;\
   export \
-    SRC=/src/xiegu-v1.1.8-modded.Dockerfile.d ;\
+    SRC=/src/xiegu-modded.Dockerfile.d ;\
   exec \
     /bin/sh /src/img-mangler/docker-build-helper.sh $SRC

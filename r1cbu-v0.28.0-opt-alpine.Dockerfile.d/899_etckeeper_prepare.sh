@@ -1,1 +1,0 @@
-../xiegu-v1.1.8-opt-alpine.Dockerfile.d/899_etckeeper_prepare.sh
